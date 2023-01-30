@@ -160,7 +160,7 @@ const char * merlon_cutscene_1 =
 "errands.\n"
 "<k>\n<p>\n"
 "By the way, if you ever need\n"
-"anything don't be afraid to\n"
+"anything, don't be afraid to\n"
 "ask.\n"
 "<k>\n<p>\n"
 "I have inherited a wealth of\n"
@@ -233,7 +233,7 @@ const char * merlon_cutscene_tippi =
 "be just fine.</wave>\n\n"
 "<k>\n<p>\n"
 "With that, I must bid farewell.\n"
-"<wait 250>Your will know when it is time\n"
+"<wait 250>You will know when it is time\n"
 "for you to play your part.\n"
 "<k>\n<p>\n"
 "Until then.. <wait 250>ciao!\n"
@@ -294,7 +294,7 @@ EVT_BEGIN(merlonCutscene)
  USER_FUNC(spm::evt_msg::evt_msg_continue)
  WAIT_MSEC(500)
 
- USER_FUNC(spm::evt_npc::evt_npc_set_position, PTR("dimcut"), -263, 102, -259)
+ USER_FUNC(spm::evt_npc::evt_npc_set_position, PTR("dimcut"), -270, 90, -260)
  USER_FUNC(spm::evt_npc::evt_npc_set_property, PTR("dimcut"), 0xe, PTR(animsDimen)) // Load animations
 
  USER_FUNC(spm::evt_snd::evt_snd_bgmoff_f, 0, 2000)
@@ -307,7 +307,7 @@ EVT_BEGIN(merlonCutscene)
  WAIT_MSEC(500)
  USER_FUNC(spm::evt_npc::evt_npc_face_dir, PTR("mercut"), 1)
  WAIT_MSEC(1000)
- USER_FUNC(spm::evt_cam::evt_cam3d_evt_zoom_in, 1, 50, 101, 644, -260, 101, 150, 0, 11)
+ USER_FUNC(spm::evt_cam::evt_cam3d_evt_zoom_in, 1, -300, 110, 400, -300, 110, -260, 0, 11)
  USER_FUNC(spm::evt_snd::evt_snd_bgmon, 0, PTR("BGM_EVT_DMN_APPEAR1"))
  USER_FUNC(spm::evt_npc::evt_npc_set_anim, PTR("dimcut"), 0, true) // Play animation 0 (flying)
  USER_FUNC(spm::evt_npc::evt_npc_teleport_effect, 1, PTR("dimcut"))
@@ -379,15 +379,19 @@ EVT_BEGIN(merlonCutscene)
  USER_FUNC(spm::evt_mario::evt_mario_face_dir, 90, 200)
  USER_FUNC(spm::evt_npc::evt_npc_set_anim, PTR("dimcut"), 1, true) // Play animation 1 (Idle ground)
  USER_FUNC(spm::evt_npc::evt_wait_anim_end, PTR("dimcut"), 1)
- USER_FUNC(spm::evt_npc::evt_npc_set_anim, PTR("dimcut"), 27, true) // Play animation 27 (fly)
- USER_FUNC(spm::evt_npc::evt_wait_anim_end, PTR("dimcut"), 1)
- USER_FUNC(spm::evt_npc::evt_npc_set_anim, PTR("dimcut"), 0, true) // Play animation 0 (flying)
- WAIT_FRM(60)
  
  USER_FUNC(spm::evt_msg::evt_msg_print, 1, PTR("<fairy>\nM-<wait 250>Merlon!\n<k>\n<o>\n"), 0, PTR("__guide__"))
  USER_FUNC(spm::evt_msg::evt_msg_continue)
 
- USER_FUNC(spm::evt_npc::evt_npc_glide_to, PTR("dimcut"), -263, 102, -259, 0, 100, 0x0, 0, 0, 0)
+ USER_FUNC(spm::evt_npc::evt_npc_set_anim, PTR("dimcut"), 27, true) // Play animation 27 (fly)
+ USER_FUNC(spm::evt_npc::evt_wait_anim_end, PTR("dimcut"), 1)
+ USER_FUNC(spm::evt_npc::evt_npc_set_anim, PTR("dimcut"), 0, true) // Play animation 0 (flying)
+ USER_FUNC(spm::evt_npc::evt_npc_glide_to, PTR("dimcut"), -140, 0, -259, 0, 100, 20, 0, 0, 0)
+ USER_FUNC(spm::evt_npc::evt_npc_face_dir, PTR("dimcut"), 0)
+
+//  USER_FUNC(spm::evt_npc::evt_npc_glide_to, PTR("dimcut"), -400, 80, -259, 0, 100, 20, 0, 0, 0)
+//  USER_FUNC(spm::evt_npc::evt_npc_face_dir, PTR("dimcut"), 1) // Make Dimentio face right
+//  USER_FUNC(spm::evt_mario::evt_mario_face_dir, -90, 200)
 
  WAIT_MSEC(500)
  USER_FUNC(spm::evt_msg::evt_msg_print, 0, PTR("merlon_cutscene_6"), 0, PTR("dimcut"))
@@ -409,7 +413,7 @@ EVT_BEGIN(merlonCutscene)
  USER_FUNC(spm::evt_npc::evt_npc_delete, PTR("dimcut")) // Delete the NPC
  USER_FUNC(spm::evt_npc::evt_npc_delete, PTR("mercut")) // Delete the NPC
  
- USER_FUNC(spm::evt_msg::evt_msg_print, 1, PTR("<fairy>\nMerlon.. <wait 250>what did that creep\ndo to him?!<wait 250> We have to find him!\n<k>\n<p><fairy>\nCome on, Mario, if that creep\nis working for Count Bleck we're\nbound to run into him.\n<k>\n<o>\n"), 0, PTR("__guide__"))
+ USER_FUNC(spm::evt_msg::evt_msg_print, 1, PTR("<fairy>\nMerlon.. <wait 250>what did that creep\ndo to him?!<wait 250> We have to find him!\n<k>\n<p><fairy>\nCome on, Mario, if he's\nworking for Count Bleck, we're\nbound to run into him.\n<k>\n<o>\n"), 0, PTR("__guide__"))
  USER_FUNC(spm::evt_msg::evt_msg_continue)
  
  WAIT_MSEC(1000)
@@ -471,7 +475,7 @@ EVT_BEGIN(bos01_cutscene)
  USER_FUNC(spm::evt_msg::evt_msg_print, 1, PTR("Ahh, <wait 150>welcome.. <wait 250>this is Dimension\nD, a dimension of my own \ncreation. <wait 250>Isn't it wonderful?\n<k>\n<o>"), 0, PTR("dimbos"))
  USER_FUNC(spm::evt_msg::evt_msg_continue)
 
- USER_FUNC(spm::evt_msg::evt_msg_print, 1, PTR("A dimension of your own\ncreation?! <wait 250>But only the ancients\npossessed that kind of power!<k>\n<o>\n"), 0, PTR("merbos"))
+ USER_FUNC(spm::evt_msg::evt_msg_print, 1, PTR("Of your own creation?! <wait 250>But only\nthe ancients possessed that\nkind of power!<k>\n<o>\n"), 0, PTR("merbos"))
  USER_FUNC(spm::evt_msg::evt_msg_continue)
 
  USER_FUNC(spm::evt_cam::evt_cam3d_evt_zoom_in, 1, 50, 101, 644, 30, 101, 100, 0, 11)
@@ -548,8 +552,9 @@ EVT_BEGIN(bos01_cutscene)
  USER_FUNC(spm::evt_msg::evt_msg_print, 1, PTR("Ahh, don't you know the\ngolden rule? <wait 250>A magician never\nexplains his secrets.\n<k>\n<p>Though I suppose I do owe you\nan explanation, of sorts.\n<k>\n<o>"), 0, PTR("dimbos"))
  USER_FUNC(spm::evt_msg::evt_msg_continue)
 
- USER_FUNC(spm::evt_msg::evt_msg_print, 1, PTR("this is a place holder lmao xd\n<k>\n<o>"), 0, PTR("dimbos"))
+ USER_FUNC(spm::evt_msg::evt_msg_print, 1, PTR("If you can defeat me, that is!\n<k>\n<p>Now we shall duel, like two\nseagulls fighting over the last\nMcDonalds french fry!\n<k>\n<o>"), 0, PTR("dimbos"))
  USER_FUNC(spm::evt_msg::evt_msg_continue)
+ USER_FUNC(spm::evt_npc::evt_npc_teleport_effect, 0, PTR("merbos"))
 
  USER_FUNC(spm::evt_snd::evt_snd_bgmoff_f, 0, 2000)
  USER_FUNC(spm::evt_cam::evt_reset_camera, 500, 11)
@@ -561,7 +566,8 @@ EVT_BEGIN(bos01_cutscene)
  USER_FUNC(spm::evt_npc::evt_npc_set_unitwork, LW(10), 8, PTR(post_dimen))
  USER_FUNC(spm::evt_snd::evt_snd_bgmon, 0, PTR("BGM_BTL_DIMEN1"))
  //USER_FUNC(spm::evt_npc::evt_npc_set_rgba, PTR("merbos"), 255, 255, 255, 0)
- USER_FUNC(spm::evt_npc::evt_npc_set_disp_func_2, PTR("merbos"), PTR(spm::evt_npc::evt_disp_func_static), 0)
+ //USER_FUNC(spm::evt_npc::evt_npc_set_disp_func_2, PTR("merbos"), PTR(spm::evt_npc::evt_disp_func_static), 0)
+ USER_FUNC(spm::evt_mario::evt_mario_set_pose, PTR("S_1"), 0) 
  USER_FUNC(spm::evt_mario::evt_mario_key_on)
 
  
@@ -590,34 +596,30 @@ EVT_BEGIN(forwarder_evt3)
     USER_FUNC(spm::evt_fairy::evt_fairy_flag_onoff, 1, 2)
 
     // Spawn Merlon
-    USER_FUNC(spm::evt_npc::evt_npc_entry, PTR("merbos"), PTR("n_machi_dearle"), 0) // Create an NPC with the specified name, model, and index
-    USER_FUNC(spm::evt_npc::evt_npc_set_property, PTR("merbos"), 0xe, PTR(animsMerlonScared)) // Load animations
+    SPAWN_CHARACTER("merbos", "n_machi_dearle", animsMerlonScared)
     USER_FUNC(spm::evt_npc::evt_npc_set_position, PTR("merbos"), -50, 0, 0)
     USER_FUNC(spm::evt_npc::evt_npc_set_scale, PTR("merbos"), 0, 1, 1) // Make Merlon invisible
     USER_FUNC(spm::evt_npc::evt_npc_face_dir, PTR("merbos"), 1) // Make Merlon face right
     //USER_FUNC(spm::evt_npc::evt_npc_face_dir, PTR("merbos"), 1)
 
     // Spawn Dimentio
-    USER_FUNC(spm::evt_npc::evt_npc_entry, PTR("dimbos"), PTR("e_dmen"), 0) // Create an NPC with the specified name, model, and index
+    SPAWN_CHARACTER("dimbos", "e_dmen", animsDimen)
     USER_FUNC(spm::evt_npc::evt_npc_set_scale, PTR("dimbos"), 0, 1, 1) // Make Dimentio invisible
     USER_FUNC(spm::evt_npc::evt_npc_set_position, PTR("dimbos"), 50, 35, 0)
-    USER_FUNC(spm::evt_npc::evt_npc_set_property, PTR("dimbos"), 0xe, PTR(animsDimen)) // Load animations
     USER_FUNC(spm::evt_npc::evt_npc_set_anim, PTR("dimbos"), 0, true) // Play animation 0 (flying)
 
     // Spawn fake Dimentio Clone 1
-    USER_FUNC(spm::evt_npc::evt_npc_entry, PTR("dimbos1"), PTR("e_dmen"), 0) // Create an NPC with the specified name, model, and index
+    SPAWN_CHARACTER("dimbos1", "e_dmen", animsDimen)
     USER_FUNC(spm::evt_npc::evt_npc_set_scale, PTR("dimbos1"), 0, 1, 1) // Make Dimentio invisible
     USER_FUNC(spm::evt_npc::evt_npc_set_position, PTR("dimbos1"), -120, 50, 0)
-    USER_FUNC(spm::evt_npc::evt_npc_set_property, PTR("dimbos1"), 0xe, PTR(animsDimen)) // Load animations
     USER_FUNC(spm::evt_npc::evt_npc_set_anim, PTR("dimbos1"), 0, true) // Play animation 0 (flying)
     USER_FUNC(spm::evt_npc::evt_npc_face_dir, PTR("dimbos1"), 1) // Make fake Dimentio face right
 
     // Spawn fake Dimentio Clone 2
-    USER_FUNC(spm::evt_npc::evt_npc_entry, PTR("dimbos2"), PTR("e_dmen"), 0) // Create an NPC with the specified name, model, and index
+    SPAWN_CHARACTER("dimbos2", "e_dmen", animsDimen)
+    USER_FUNC(spm::evt_npc::evt_npc_set_anim, PTR("dimbos2"), 0, true) // Play animation 0 (flying)
     USER_FUNC(spm::evt_npc::evt_npc_set_scale, PTR("dimbos2"), 0, 1, 1) // Make Dimentio invisible
     USER_FUNC(spm::evt_npc::evt_npc_set_position, PTR("dimbos2"), 120, 75, 0)
-    USER_FUNC(spm::evt_npc::evt_npc_set_property, PTR("dimbos2"), 0xe, PTR(animsDimen)) // Load animations
-    USER_FUNC(spm::evt_npc::evt_npc_set_anim, PTR("dimbos2"), 0, true) // Play animation 0 (flying)
     RUN_EVT(bos01_cutscene)
     RETURN()
 EVT_END()
@@ -639,7 +641,7 @@ EVT_END()
 EVT_BEGIN(mac_02_custom_init)
     // Spawn Merlon
     USER_FUNC(spm::evt_npc::evt_npc_entry, PTR("mercut"), PTR("n_machi_dearle"), 0) // Create an NPC with the specified name, model, and index
-    USER_FUNC(spm::evt_npc::evt_npc_set_property, PTR("mercut"), 0xe, PTR(animsMerlonNormal)) // Load animations
+    USER_FUNC(spm::evt_npc::evt_npc_set_property, PTR("mercut"), spm::evt_npc::NPCProperty::ANIMS, PTR(animsMerlonNormal)) // Load animations
     USER_FUNC(spm::evt_npc::evt_npc_set_position, PTR("mercut"), 0, -1000, 0)
     USER_FUNC(spm::evt_npc::evt_npc_add_flip_part, PTR("mercut"))
     WAIT_MSEC(1000)

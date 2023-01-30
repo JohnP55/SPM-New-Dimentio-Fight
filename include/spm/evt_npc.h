@@ -7,6 +7,10 @@ namespace spm::evt_npc {
 
 extern "C" {
 
+typedef enum {
+    ANIMS = 0xe
+} NPCProperty;
+
 // evt_npc_set_position(const char * instanceName, float x, float y, float z)
 EVT_DECLARE_USER_FUNC(evt_npc_set_position, 4)
 
