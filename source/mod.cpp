@@ -277,7 +277,7 @@ static void messagePatch()
 
 EVT_BEGIN(merlonCutscene)
  USER_FUNC(spm::evt_mario::evt_mario_key_off, 0) // Disable Mario's movement
- USER_FUNC(spm::evt_fairy::evt_fairy_flag_onoff, 1, 2) // Make pixl invisible; temp for now
+ //USER_FUNC(spm::evt_fairy::evt_fairy_flag_onoff, 1, 2) // Make pixl invisible; temp for now
  
  USER_FUNC(spm::evt_npc::evt_npc_set_position, PTR("mercut"), -700, 0, -259)
  //USER_FUNC(spm::evt_npc::evt_npc_flip_to, PTR("mercut"), 0)
@@ -424,26 +424,31 @@ EVT_BEGIN(merlonCutscene)
 RETURN()
 EVT_END()
 
-EVT_BEGIN(post_dimen)
+EVT_BEGIN(post_dimen_cutscene)
+    USER_FUNC(spm::evt_npc::evt_npc_set_property, PTR("dimbos"), 0xe, PTR(animsDimenDead))
+    USER_FUNC(spm::evt_npc::evt_npc_flag8_onoff, PTR("dimbos"), 1, 8) // Make Dimentio fall to the ground
+    USER_FUNC(spm::evt_npc::func_801072a4, PTR("dimbos"))
+    USER_FUNC(spm::evt_npc::evt_npc_flag8_onoff, PTR("dimbos"), 0, 8)
+    USER_FUNC(spm::evt_npc::evt_npc_set_anim, PTR("dimbos"), 1, true)
+    USER_FUNC(spm::evt_npc::evt_npc_face_mario, PTR("dimbos"))
+    USER_FUNC(spm::evt_npc::evt_npc_set_anim, PTR("dimbos"), 20, true)
+    USER_FUNC(spm::evt_msg::evt_msg_print, 1, PTR("bro you fucked me goddamn\n<k>\n<o>\n"), 0, PTR("dimbos"))
+    USER_FUNC(spm::evt_msg::evt_msg_continue)
+    
+    WAIT_MSEC(1000)
+    USER_FUNC(spm::evt_fade::evt_set_transition, 26, 25)
+    USER_FUNC(spm::evt_seq::evt_seq_set_seq, spm::seqdrv::SEQ_MAPCHANGE, PTR("mac_02"), 0)
+    RETURN()
+EVT_END()
+
+EVT_BEGIN(post_dimen_setup)
     USER_FUNC(spm::evt_mario::evt_mario_key_off, 0)
     USER_FUNC(spm::evt_snd::evt_snd_bgmoff_f, 0, 2000)
     USER_FUNC(spm::evt_npc::evt_npc_id_to_name, 123 + 0x10000000, LW(10))
     USER_FUNC(spm::evt_npc::evt_npc_get_position, LW(10), LW(0), LW(1), LW(2))
-    USER_FUNC(spm::evt_npc::evt_npc_delete, LW(10)) // Delete the NPC
-    USER_FUNC(spm::evt_npc::evt_npc_set_property, PTR("dimbos"), 0xe, PTR(animsDimenDead))
     USER_FUNC(spm::evt_npc::evt_npc_set_position, PTR("dimbos"), LW(0), LW(1), LW(2))
-    USER_FUNC(spm::evt_npc::evt_npc_flag8_onoff, PTR("dimbos"), 1, 8) // Make Dimentio fall to the ground
-    USER_FUNC(spm::evt_npc::evt_npc_set_anim, PTR("dimbos"), 1, false)
-    USER_FUNC(spm::evt_npc::evt_npc_face_mario, PTR("dimbos"))
-    WAIT_FRM(60)
-    USER_FUNC(spm::evt_npc::evt_npc_set_anim, PTR("dimbos"), 2, true)
-    USER_FUNC(spm::evt_msg::evt_msg_print, 1, PTR("bro you fucked me goddamn\n<k>\n<o>"), 0, PTR("dimbos"))
-    USER_FUNC(spm::evt_msg::evt_msg_continue)
-
-    WAIT_MSEC(1000)
-    USER_FUNC(spm::evt_fade::evt_set_transition, 26, 25)
-    USER_FUNC(spm::evt_seq::evt_seq_set_seq, spm::seqdrv::SEQ_MAPCHANGE, PTR("mac_02"), 0)
-
+    RUN_EVT(post_dimen_cutscene)
+    USER_FUNC(spm::evt_npc::evt_npc_delete, LW(10)) // Delete the NPC
     RETURN()
 EVT_END()
 
@@ -561,9 +566,9 @@ EVT_BEGIN(bos01_cutscene)
  WAIT_MSEC(1000)
  USER_FUNC(spm::evt_npc::evt_npc_get_position, PTR("dimbos"), LW(0), LW(1), LW(2))
  USER_FUNC(spm::evt_npc::evt_npc_set_position, PTR("dimbos"), 0, -1000, 0)
- USER_FUNC(spm::evt_npc::evt_npc_entry_from_template, 123, DIMENTIO_TEMPLATE_ID, LW(0), LW(1), LW(2), LW(10), 0)
+ USER_FUNC(spm::evt_npc::evt_npc_entry_from_template, 123, DIMENTIO_TEMPLATE_ID, LW(0), LW(1), LW(2), LW(10), EVT_NULLPTR)
  USER_FUNC(spm::evt_npc::evt_npc_face_dir, LW(10), 1) // Make Boss Dimentio face right
- USER_FUNC(spm::evt_npc::evt_npc_set_unitwork, LW(10), 8, PTR(post_dimen))
+ USER_FUNC(spm::evt_npc::evt_npc_set_unitwork, LW(10), 8, PTR(post_dimen_setup))
  USER_FUNC(spm::evt_snd::evt_snd_bgmon, 0, PTR("BGM_BTL_DIMEN1"))
  //USER_FUNC(spm::evt_npc::evt_npc_set_rgba, PTR("merbos"), 255, 255, 255, 0)
  //USER_FUNC(spm::evt_npc::evt_npc_set_disp_func_2, PTR("merbos"), PTR(spm::evt_npc::evt_disp_func_static), 0)
@@ -628,10 +633,10 @@ EVT_BEGIN(run_cutscene)
     DO(0)
         USER_FUNC(spm::evt_mario::evt_mario_get_pos, LW(1), LW(2), LW(3))
         IF_SMALL_EQUAL(LW(1), -280)
-        IF_SMALL_EQUAL(LW(2), 1000)
-        RUN_EVT(forwarder_evt2)
-        DO_BREAK()
-        END_IF()
+            IF_SMALL_EQUAL(LW(2), 1000)
+                RUN_EVT(forwarder_evt2)
+                DO_BREAK()
+            END_IF()
         END_IF()
         WAIT_FRM(1)
     WHILE()
@@ -698,11 +703,14 @@ void main()
     bos_01_md->script = forwarder_evt3;
 
     // Modify unused Ch5 Dimentio's HP
-    spm::npcdrv::npcTribes[spm::npcdrv::npcEnemyTemplates[DIMENTIO_TEMPLATE_ID].tribeId].maxHp = 250;
+    spm::npcdrv::npcTribes[spm::npcdrv::npcEnemyTemplates[DIMENTIO_TEMPLATE_ID].tribeId].maxHp = 150;
     spm::npcdrv::npcTribes[spm::npcdrv::npcEnemyTemplates[DIMENTIO_TEMPLATE_ID].tribeId].attack = 8;
 
     // Modify unused Ch5 Dimentio's magic's attack
+#ifdef SPM_US0
+    // it's a number in an evt script so this is the most convenient way of doing it and i'm too lazy to port it
     *(int*)0x80419c74 = 8;
+#endif
 
     //spm::mac_02::merlonDoorDesc.npcNameList = customNameList; // Actually replace merlon's door script with ours
 

@@ -121,7 +121,7 @@
 // evt_snd.c
 800d2148:evt_snd_bgmon
 800d21f8:evt_snd_bgmoff
-
+800d2224:evt_snd_bgmoff_f
 800d2800:evt_snd_sfxon
 800d29cc:evt_snd_sfxon_3d
 800d2c00:evt_snd_sfxon_player
@@ -161,6 +161,10 @@
 8050ce30:evt_debug_put_reg_str
 // more
 
+// evt_cam.c
+// text
+800dff20:evt_cam3d_evt_zoom_in
+800e0430:evt_reset_camera
 // evt_door.c
 // text
 800e11e0:evt_door_wait_flag
@@ -178,6 +182,7 @@
 
 // evt_fade.c
 800e7100:evt_fade_end_wait
+800e720c:evt_set_transition
 // more
 
 // evt_fairy.c
@@ -201,10 +206,15 @@
 // more
 
 // evt_mario.c
+800ef3c8:evt_mario_flag0_onoff
 800ef4c0:evt_mario_flag8_onoff
 800ef650:evt_mario_key_off
 800ef62c:evt_mario_key_on
+800ef988:evt_mario_set_pos
 800efa4c:evt_mario_get_pos
+800efb50:evt_mario_set_scale
+800efd88:evt_mario_face_dir
+800effb8:evt_npc_face_mario
 800f25b0:evt_set_gravity
 800f1954:evt_mario_set_pose
 // more
@@ -230,10 +240,14 @@
 // more
 
 // evt_npc.c
+800fe124:evt_npc_get_position
 800fe21c:evt_npc_set_position
+800fef30:evt_npc_set_scale
 80102f5c:evt_npc_entry
 80103054:func_80103054
 80103108:evt_npc_set_anim
+80103410:evt_wait_anim_end
+80103ea8:evt_npc_set_unitwork
 80104694:func_80104694
 8010368c:evt_npc_flag8_onoff
 801039b8:evt_npc_animflag_onoff
@@ -241,6 +255,8 @@
 80104fac:evt_npc_modify_part
 801059d0:func_801059d0
 80106724:evt_npc_entry_from_template
+801072a4:func_801072a4
+80107540:evt_npc_id_to_name
 80107cfc:func_80107cfc
 80107d20:func_80107d20
 80108194:func_80108194
